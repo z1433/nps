@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/logs"
-	"github.com/xtaci/kcp-go"
+	"ssssgithub.com/xtaci/kcp-go"
 
 	"ehang.io/nps/lib/common"
 	"ehang.io/nps/lib/config"
