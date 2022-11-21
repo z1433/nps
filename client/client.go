@@ -205,15 +205,12 @@ func (s *TRPClient) handleChan(src net.Conn) {
 		return
 	}
 	if lk.ConnType == "udp5" {
-		logs.Trace("new %s connection with the goal of %s, remote address:%s", lk.ConnType, lk.Host, lk.RemoteAddr)
 		s.handleUdp(src)
 	}
 	//connect to target if conn type is tcp or udp
 	if targetConn, err := net.DialTimeout(lk.ConnType, lk.Host, lk.Option.Timeout); err != nil {
-		logs.Warn("connect to %s error %s", lk.Host, err.Error())
 		src.Close()
 	} else {
-		logs.Trace("new %s connection with the goal of %s, remote address:%s", lk.ConnType, lk.Host, lk.RemoteAddr)
 		conn.CopyWaitGroup(src, targetConn, lk.Crypt, lk.Compress, nil, nil, false, nil, nil)
 	}
 }
@@ -241,7 +238,6 @@ func (s *TRPClient) handleUdp(serverConn net.Conn) {
 			dgram.Write(&buf)
 			b, err := conn.GetLenBytes(buf.Bytes())
 			if err != nil {
-				logs.Warn("get len bytes error", err.Error())
 				continue
 			}
 			if _, err := serverConn.Write(b); err != nil {
